@@ -60,10 +60,10 @@ auto handle_instruction(It it, Memory& memory, Stack& loop_stack,
             memory.inc_ptr();
         break;
         case '[':
-            it = detail::left_bracket(it, memory, loop_stack, program);
+            it = left_bracket(it, memory, loop_stack, program);
         break;
         case ']':
-            it = detail::right_bracket(it, memory, loop_stack);
+            it = right_bracket(it, memory, loop_stack);
         break;
         case '.':
             out_func(memory.get());
