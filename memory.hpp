@@ -50,7 +50,7 @@ public:
     auto get() -> value_type& {
         return memory[index];
     }
-    auto get() const -> const value_type& {
+    auto get() const -> value_type const& {
         return memory[index];
     }
     

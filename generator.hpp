@@ -7,12 +7,12 @@
 namespace bf {
 
 template<typename T>
-auto to_bf_code(const T& x) {
+auto to_bf_code(T const& x) {
     return std::string(x, '+');
 }
 
 template<typename T = uint8_t, typename Range>
-auto generate(const Range& desired_output) {
+auto generate(Range const& desired_output) {
     auto program = std::string{};
     
     for(auto&& c : desired_output)

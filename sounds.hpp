@@ -22,7 +22,7 @@ enum class note {
 };
 
 template<typename T>
-constexpr auto frequency(const T& n) {
+constexpr auto frequency(T const& n) {
     return 440.0 * std::pow(2.0, (n - 69.0) / 12.0);
     // return 440.0 * std::exp2((n - 69.0) / 12.0);
 }
@@ -59,7 +59,7 @@ private:
     uint_fast16_t duration;
     float volume;
     
-    auto set_mode(const mode& x) {
+    auto set_mode(mode const& x) {
         current_mode = x;
     }
     

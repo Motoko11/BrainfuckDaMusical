@@ -12,7 +12,7 @@
 namespace bf { namespace detail {
 
 template<typename Memory, typename Stack, typename It, typename Range>
-auto left_bracket(It it, const Memory& memory, Stack& loop_stack, const Range& program) {
+auto left_bracket(It it, Memory const& memory, Stack& loop_stack, Range const& program) {
     using std::end;
     
     if(memory.get() == 0) {
@@ -34,7 +34,7 @@ auto left_bracket(It it, const Memory& memory, Stack& loop_stack, const Range& p
 }
 
 template<typename It, typename Memory, typename Stack>
-auto right_bracket(It it, const Memory& memory, Stack& loop_stack) {
+auto right_bracket(It it, Memory const& memory, Stack& loop_stack) {
     if(loop_stack.empty()) throw parse_error("Parse error: Unmatched ']'");
     else if(memory.get() == 0) loop_stack.pop_back();
     else it = loop_stack.back();
@@ -45,7 +45,7 @@ auto right_bracket(It it, const Memory& memory, Stack& loop_stack) {
 template <typename It, typename Memory, typename Stack,
           typename Range, typename Func1, typename Func2>
 auto handle_instruction(It it, Memory& memory, Stack& loop_stack,
-                        const Range& program, Func1&& out_func, Func2&& in_func) {
+                        Range const& program, Func1&& out_func, Func2&& in_func) {
     switch(*it) {
         case '+':
             memory.inc();
@@ -81,7 +81,7 @@ auto handle_instruction(It it, Memory& memory, Stack& loop_stack,
 namespace bf {
 
 template<typename T = uint8_t, typename Range, typename Func1, typename Func2>
-auto run_program(const Range& program, Func1&& out_func, Func2&& in_func) {
+auto run_program(Range const& program, Func1&& out_func, Func2&& in_func) {
     using std::begin;
     using std::end;
     using iterator_type = decltype(begin(program));
