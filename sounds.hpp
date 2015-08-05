@@ -5,9 +5,9 @@
 #include <windows.h> // TODO: GET RID OF THIS SIN!
 #include <cstdint>
 
-namespace sound { namespace note {
+namespace sound {
 
-enum {
+enum class note {
     C_1, Cs_1, D_1, Ds_1, E_1, F_1, Fs_1, G_1, Gs_1, A_1, As_1, B_1,
     C0, Cs0, D0, Ds0, E0, F0, Fs0, G0, Gs0, A0, As0, B0,
     C1, Cs1, D1, Ds1, E1, F1, Fs1, G1, Gs1, A1, As1, B1,
@@ -27,21 +27,19 @@ constexpr auto frequency(const T& n) {
     // return 440.0 * std::exp2((n - 69.0) / 12.0);
 }
 
-}} // namespace bf::sound
-
-
-namespace sound { namespace mode {
-
-enum Mode {
-    SOUND = 128, PRINT, VOLUME, DURATION
-};
-
-}} // namespace sound::mode
+} // namespace sound
 
 
 namespace sound {
 
-using mode::Mode;
+enum class mode {
+    SOUND = 128, PRINT, VOLUME, DURATION
+};
+
+} // namespace sound
+
+
+namespace sound {
 
 class Engine {
 public:
@@ -52,36 +50,34 @@ public:
     
     template<typename T>
     auto operator()(T&& x) {
-        if(x > mode::SOUND) set_mode(static_cast<Mode>(x));
+        if(static_cast<mode>(x) > mode::SOUND) set_mode(static_cast<mode>(x));
         else parse(std::forward<T>(x));
     }
     
 private:
-    Mode current_mode;
+    mode current_mode;
     uint_fast16_t duration;
     float volume;
     
-    auto set_mode(const Mode& x) {
+    auto set_mode(const mode& x) {
         current_mode = x;
     }
     
     template<typename T>
     auto parse(T&& x) {
         switch(current_mode) {
-            using namespace mode;
-            
             default: throw std::runtime_error("Error: Invalid sound engine mode."); break;
-            case SOUND: play_sound(std::forward<T>(x)); break;
-            case PRINT: print_character(std::forward<T>(x)); break;
-            case VOLUME: set_volume(std::forward<T>(x)); break;
-            case DURATION: set_duration(std::forward<T>(x)); break;
+            case mode::SOUND: play_sound(std::forward<T>(x)); break;
+            case mode::PRINT: print_character(std::forward<T>(x)); break;
+            case mode::VOLUME: set_volume(std::forward<T>(x)); break;
+            case mode::DURATION: set_duration(std::forward<T>(x)); break;
         }
     }
     
     template<typename T>
     auto play_sound(T&& x) {
         print_character(x);
-        Beep(note::frequency(x), duration);
+        Beep(frequency(x), duration);
     }
     
     template<typename T>
