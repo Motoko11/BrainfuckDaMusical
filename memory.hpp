@@ -47,10 +47,10 @@ public:
         else index--;
     }
     
-    auto get() -> value_type& {
+    auto& get() {
         return memory[index];
     }
-    auto get() const -> value_type const& {
+    auto const& get() const {
         return memory[index];
     }
     

@@ -103,7 +103,7 @@ auto run_program(Range&& program, Func1&& out_func) {
     run_program<T>(
         std::forward<Range>(program),
         std::forward<Func1>(out_func),
-        [](auto&& x) { std::cin >> x; }
+        [](auto& x) { std::cin >> x; }
     );
 }
 
@@ -111,7 +111,7 @@ template<typename T = uint8_t, typename Range>
 auto run_program(Range&& program) {
     run_program<T>(
         std::forward<Range>(program),
-        [](auto&& x) { std::cout << x; }
+        [](auto& x) { std::cout << x; }
     );
 }
 
